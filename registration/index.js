@@ -1,8 +1,8 @@
-const express = require('express')
-const bcrypt = require('bcrypt') // used for hashing
+const express = require("express")
+const bcrypt = require("bcrypt") // used for hashing
 
-const { generateToken } = require('../common/authentication')
-const db = require('../data/dbConfig')
+const { generateToken } = require("../common/authentication")
+const db = require("../data/dbConfig")
 
 const server = express.Router()
 
@@ -20,35 +20,33 @@ const server = express.Router()
 // @desc     Register new User
 // @Access   Public
 //-----------------------------------------------------------
-server.post('/register', async (req, res) => {
+server.post("/register", async (req, res) => {
   const { username } = req.body
   let { password } = req.body
 
   // Validate user
   if (!username) {
-    return res.status(400).json({ message: 'no username provided' })
+    return res.status(400).json({ message: "no username provided" })
   }
   if (!password) {
-    return res.status(400).json({ message: 'no password provided' })
+    return res.status(400).json({ message: "no password provided" })
   }
 
   try {
     // hash password
     password = await bcrypt.hash(password, 1)
-
     // Add user to db
     await db
       .insert({
         username,
-        password,
+        password
       })
-      .into('users')
-
+      .into("users")
     // get user
     const user = await db
       .select()
-      .from('users as u')
-      .where('u.username', username)
+      .from("users as u")
+      .where("u.username", username)
       .first()
     // generate token
     const token = await generateToken(user)
@@ -56,7 +54,7 @@ server.post('/register', async (req, res) => {
     // send response
     res.status(201).json({
       user,
-      token,
+      token
     })
 
     // catch errors
@@ -81,19 +79,19 @@ server.post('/register', async (req, res) => {
 // @desc     Login User
 // @Access   Public
 //-----------------------------------------------------------
-server.post('/login', async (req, res) => {
+server.post("/login", async (req, res) => {
   const { username, password } = req.body
   if (!username) {
-    return res.status(400).json({ message: 'no username provided' })
+    return res.status(400).json({ message: "no username provided" })
   }
   if (!password) {
-    return res.status(400).json({ message: 'no username provided' })
+    return res.status(400).json({ message: "no username provided" })
   }
 
   try {
     const user = await db
       .select()
-      .from('users')
+      .from("users")
       .where({ username })
       .first()
 
@@ -103,7 +101,7 @@ server.post('/login', async (req, res) => {
       const correct = await bcrypt.compare(password, user.password)
 
       if (!correct) {
-        return res.status(401).json({ message: 'Invalid credentials' })
+        return res.status(401).json({ message: "Invalid credentials" })
       }
       // generate token
       const token = await generateToken(user)

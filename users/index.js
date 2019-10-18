@@ -1,18 +1,18 @@
-const server = require('express').Router()
-const multipart = require('connect-multiparty')()
-const db = require('../data/dbConfig')
+const server = require("express").Router()
+const multipart = require("connect-multiparty")()
+const db = require("../data/dbConfig")
 
-const uploadImage = require('../common/upload')
-const { authenticate } = require('../common/authentication')
+const uploadImage = require("../common/upload")
+const { authenticate } = require("../common/authentication")
 
 // ------------------------------------------------------------
 // @route    /api/user/getAll
 // @desc     GET ALL user
 // @Access   Public
 // ------------------------------------------------------------
-server.get('/All', async (req, res) => {
+server.get("/All", async (req, res) => {
   try {
-    const user = await db('users')
+    const user = await db("users")
     res.json({ user })
   } catch ({ message }) {
     res.status(500).json({ message })
@@ -26,10 +26,9 @@ server.get('/All', async (req, res) => {
 // ------------------------------------------------------------
 const returnCurrent = async (id, res) => {
   try {
-    const user = await db('users')
+    const user = await db("users")
       .where({ id })
       .first()
-
 
     res.json({ user })
 
@@ -44,7 +43,7 @@ const returnCurrent = async (id, res) => {
 // @desc     Get current user
 // @Access   Public
 //-----------------------------------------------------------
-server.get('/current', authenticate, (req, res) => {
+server.get("/current", authenticate, (req, res) => {
   const { id } = req.decoded.user
   returnCurrent(id, res)
 })
@@ -54,14 +53,14 @@ server.get('/current', authenticate, (req, res) => {
 // @desc     Update user detail
 // @Access   Public
 //-----------------------------------------------------------
-server.put('/', authenticate, multipart, async (req, res) => {
+server.put("/", authenticate, multipart, async (req, res) => {
   const { username } = req.body
   const { id } = req.decoded.user
   try {
     // upload image
     const { secure_url } = await uploadImage(req)
     // update changes
-    await db('users')
+    await db("users")
       .update({ avatar: secure_url, username })
       .where({ id })
     // return updated changes with current user
@@ -76,16 +75,16 @@ server.put('/', authenticate, multipart, async (req, res) => {
 // @desc     DELETE account only owner should be able to do this
 // @Access   Private
 //-----------------------------------------------------------
-server.delete('/', authenticate, async (req, res) => {
+server.delete("/", authenticate, async (req, res) => {
   const { id } = req.decoded.user
   try {
     await db
       .delete()
-      .from('users')
+      .from("users")
       .where({ id })
 
     // returnCurrent(id, res)
-    res.json({ message: 'user deleted successfully' })
+    res.json({ message: "user deleted successfully" })
   } catch ({ message }) {
     res.status(500).json({ message })
   }
