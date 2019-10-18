@@ -1,3 +1,5 @@
+require("dotenv").config()
+
 // connect express
 const express = require("express")
 const helmet = require("helmet")
