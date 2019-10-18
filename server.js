@@ -7,6 +7,7 @@ const cors = require("cors")
 // routes
 const registration = require("./registration")
 const user = require("./users")
+const todo = require("./todo/todo-route.js")
 
 // init express
 const server = express()
@@ -20,6 +21,7 @@ server.use(morgan("dev")) // debugging logger
 // use routes
 server.use("/api/auth", registration)
 server.use("/api/user", user)
+server.use("/api/todo", todo)
 
 // index route display name
 server.get("/", (req, res) => {
