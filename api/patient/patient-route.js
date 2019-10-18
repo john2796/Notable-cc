@@ -46,11 +46,6 @@ server.post('/:doctorId', async (req, res) => {
     return res.status(400).json({ message: 'Kind field is required' });
   }
   try {
-    // const minutes = 1;
-    // const theInterval = minutes * 60 * 1000;
-    // setInterval(() => {
-    //   console.log('I am doing my 15 minutes check');
-    // }, theInterval);
     const posted = await db.add('patient', {
       firstName: item.firstName,
       lastName: item.lastName,
@@ -60,7 +55,6 @@ server.post('/:doctorId', async (req, res) => {
     });
     res.status(201).json(posted);
   } catch (err) {
-    console.log(err.message);
     errHelper(500, err.errno || err, res);
   }
 });
