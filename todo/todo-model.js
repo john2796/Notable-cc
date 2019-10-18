@@ -12,10 +12,13 @@ function findBy(tbl, filter) {
 function findAllBy(tbl, filter) {
   return db(tbl).where(filter)
 }
-function add(tbl, item) {
-  return db(tbl)
+async function add(tbl, item) {
+  const [id] = await db(tbl)
     .insert(item)
     .returning("id")
+
+  const newUser = await findBy("todo", { id })
+  return newUser
 }
 
 function remove(tbl, id) {
@@ -24,10 +27,13 @@ function remove(tbl, id) {
     .del()
 }
 
-function update(tbl, id, item) {
-  return db(tbl)
+async function update(tbl, id, item) {
+  const updatedID = await db(tbl)
     .where({ id })
     .update(item)
+
+  const updatedUser = await findBy("todo", { id: updatedID })
+  return updatedUser
 }
 
 module.exports = {
