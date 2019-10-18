@@ -1,13 +1,13 @@
-exports.up = function(knex) {
-  knex.schema.createTable("todo", function(tbl) {
+exports.up = function(knex, Promise) {
+  return knex.schema.createTable("todo", function(tbl) {
     tbl.increments()
     tbl
       .string("name")
       .notNullable()
       .unique()
     tbl.string("message").notNullable()
-    tbl.boolean("completed")
-    tbl.timestamp("created").defaultTo(knex.fn.now())
+    tbl.boolean("completed").defaultTo(false)
+    tbl.timestamps(true, true)
 
     // Object example :
     // const exampleObject = {
@@ -19,6 +19,6 @@ exports.up = function(knex) {
   })
 }
 
-exports.down = function(knex) {
-  knex.schema.dropTableIfExists("todo")
+exports.down = function(knex, Promise) {
+  return knex.schema.dropTableIfExists("todo")
 }

@@ -7,7 +7,7 @@ const cors = require("cors")
 // routes
 const registration = require("./registration")
 const user = require("./users")
-const todo = require("./todo/todo-route.js")
+const todo = require("./todo/todo-route")
 
 // init express
 const server = express()

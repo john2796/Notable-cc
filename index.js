@@ -3,7 +3,7 @@ require("dotenv").config()
 
 const server = require("./server")
 // port
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 9000
 // 404
 server.use((req, res) =>
   res.status(404).send({ message: `Route Not Found: ${req.url}` })
