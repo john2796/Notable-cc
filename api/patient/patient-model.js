@@ -17,21 +17,21 @@ async function add(tbl, item) {
     .insert(item)
     .returning('id');
 
-  return get('doctors');
+  return get('patient');
 }
 
 async function remove(tbl, id) {
   await db(tbl)
     .where({ id })
     .del();
-  return get('doctors');
+  return get('patient');
 }
 
 async function update(tbl, id, item) {
   await db(tbl)
     .where({ id })
     .update(item);
-  return get('doctors');
+  return get('patient');
 }
 
 module.exports = {

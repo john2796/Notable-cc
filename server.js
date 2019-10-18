@@ -8,6 +8,7 @@ const cors = require('cors');
 
 // routes
 const doctor = require('./api/doctor/doctor-route');
+const patient = require('./api/patient/patient-route');
 const todo = require('./todo/todo-route');
 
 // init express
@@ -22,6 +23,7 @@ server.use(morgan('dev')); // debugging logger
 // use routes
 server.use('/api/todo', todo);
 server.use('/api/doctor', doctor);
+server.use('/api/patient', patient);
 
 // index route display name
 server.get('/', (req, res) => {
