@@ -1,29 +1,31 @@
-require("dotenv").config()
+require('dotenv').config();
 
 // connect express
-const express = require("express")
-const helmet = require("helmet")
-const morgan = require("morgan")
-const cors = require("cors")
+const express = require('express');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const cors = require('cors');
 
 // routes
-const todo = require("./todo/todo-route")
+const doctor = require('./api/doctor/doctor-route');
+const todo = require('./todo/todo-route');
 
 // init express
-const server = express()
+const server = express();
 
 // middleware
-server.use(express.json()) // parse incoming request to json
-server.use(helmet()) // helps secure your express by setting http headers
-server.use(cors()) // cross-domain request sharing CORS
-server.use(morgan("dev")) // debugging logger
+server.use(express.json()); // parse incoming request to json
+server.use(helmet()); // helps secure your express by setting http headers
+server.use(cors()); // cross-domain request sharing CORS
+server.use(morgan('dev')); // debugging logger
 
 // use routes
-server.use("/api/todo", todo)
+server.use('/api/todo', todo);
+server.use('/api/doctor', doctor);
 
 // index route display name
-server.get("/", (req, res) => {
-  res.status(200).json({ message: "HELLO WORLD🔥" })
-})
+server.get('/', (req, res) => {
+  res.status(200).json({ message: 'HELLO WORLD🔥' });
+});
 
-module.exports = server
+module.exports = server;
