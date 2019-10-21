@@ -14,7 +14,7 @@ const todo = require('./todo/todo-route');
 // init express
 const server = express();
 
-// middleware
+// Middleware
 server.use(express.json()); // parse incoming request to json
 server.use(helmet()); // helps secure your express by setting http headers
 server.use(cors()); // cross-domain request sharing CORS

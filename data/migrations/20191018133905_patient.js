@@ -5,7 +5,8 @@ exports.up = knex => knex.schema.createTable('patient', (tbl) => {
   tbl.string('firstName').notNullable();
   tbl.string('lastName').notNullable();
   tbl.string('kind').notNullable();
-  tbl.string('time');
+  tbl.string('time').notNullable();
+  tbl.string('date');
   tbl
     .integer('doctor_id')
     .unsigned()

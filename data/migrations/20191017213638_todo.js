@@ -1,5 +1,5 @@
-exports.up = function(knex, Promise) {
-  return knex.schema.createTable("todo", function(tbl) {
+exports.up = function (knex, Promise) {
+  return knex.schema.createTable('todo', (tbl) => {
     tbl.increments()
     tbl
       .string("name")
@@ -16,9 +16,9 @@ exports.up = function(knex, Promise) {
     //   completed: false
     //   timestamp: '02/27/3019'
     // }
-  })
-}
+  });
+};
 
-exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists("todo")
-}
+exports.down = function (knex, Promise) {
+  return knex.schema.dropTableIfExists('todo');
+};
