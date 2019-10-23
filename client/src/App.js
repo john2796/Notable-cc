@@ -32,13 +32,13 @@ export default function App() {
 function Appointments() {
   const { id } = useParams();
   return (
-    <div>
+    <>
       <h2>{id}</h2>
       <h3>
         <p># Name</p>
         <p>Time</p>
         <p>Kind</p>
       </h3>
-    </div>
+    </>
   );
 }
